@@ -37,6 +37,10 @@ if (errorMap!=null)return  errorMap;
 @GetMapping("/all")
     public Iterable<Project> getAllProjects(){return  projectService.findAllProjects();}
 
-
+@DeleteMapping("/{projectId}")
+    public ResponseEntity<?> deleteProject(@PathVariable String projectId){
+projectService.deleteProjectByIdentifier(projectId);
+return new ResponseEntity<String>("Project With ID: '"+projectId+"' was deleted",HttpStatus.OK);
+}
 }
 
