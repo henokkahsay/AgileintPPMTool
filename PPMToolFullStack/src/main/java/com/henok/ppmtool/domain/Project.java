@@ -12,38 +12,37 @@ public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank(message = "Project name is required")
+    @NotBlank (message = "Project name is required")
     private String projectName;
-    @NotBlank(message = "Project Identifier is required")
-    @Size(min = 4 , max = 5, message = "Please use 4 to 5 Character")
-    @Column(updatable = false ,unique = true) 
-    private  String  projectIdentifier;
-    @NotBlank(message = "Project Description required")
+    @NotBlank(message = "Project Identifier is  required")
+    @Size(min=4, max=5 , message= "Please use 4 to 5  Characters")
+    @Column(updatable =false,unique = true)
+    private String projectIdentifier;
+    @NotBlank(message = "project description is required")
     private String description;
-    @JsonFormat(pattern = "yyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date start_date;
-    @JsonFormat(pattern = "yyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date end_date;
-    @JsonFormat(pattern = "yyy-mm-dd")
-
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date created_At;
-    @JsonFormat(pattern = "yyy-mm-dd")
-    private Date updated_At;
-
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private  Date update_At;
 
     public Project() {
+
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getProjectName() {
-        return projectName;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getProjectName() {
+        return projectName;
     }
 
     public void setProjectName(String projectName) {
@@ -82,31 +81,30 @@ public class Project {
         this.end_date = end_date;
     }
 
-    public void setCreated_At(Date created_At) {
-        this.created_At = created_At;
-    }
-
-    public void setUpdated_At(Date updated_At) {
-        this.updated_At = updated_At;
-    }
-
     public Date getCreated_At() {
         return created_At;
     }
 
-    public Date getUpdated_At() {
-        return updated_At;
+    public void setCreated_At(Date created_At) {
+        this.created_At = created_At;
+    }
+
+    public Date getUpdate_At() {
+        return update_At;
+    }
+
+    public void setUpdate_At(Date update_At) {
+        this.update_At = update_At;
     }
 
     @PrePersist
-    protected void onCreate(){
-        this.created_At= new Date();
+    protected  void onCreat(){
+        this.created_At = new Date();
+
     }
-
-@PreUpdate
-    protected void onUpdate(){
-        this.updated_At= new Date();
-}
-
+    @PreUpdate
+    protected  void onUpdate(){
+        this.update_At = new Date();
+    }
 
 }
