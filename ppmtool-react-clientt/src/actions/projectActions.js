@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Get_ERRORS } from "./types";
+import { GET_ERRORS } from "./types";
 
 export const createProject = (project, history) => async dispatch => {
   try {
@@ -7,7 +7,7 @@ export const createProject = (project, history) => async dispatch => {
     history.push("/dashboard");
   } catch (err) {
     dispatch({
-      type: Get_ERRORS,
+      type: GET_ERRORS,
       payload: err.response.data
     });
   }
