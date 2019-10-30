@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { createProject } from "../../actions/projectActions";
 import classnames from "classnames";
+
 class AddProject extends Component {
   constructor() {
     super();
@@ -76,7 +77,7 @@ class AddProject extends Component {
                     <input
                       type="text"
                       className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.projectName
+                        "is-invalid": errors.projectIdentifier
                       })}
                       placeholder="Unique Project ID"
                       name="projectIdentifier"
@@ -92,7 +93,7 @@ class AddProject extends Component {
                   <div className="form-group">
                     <textarea
                       className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.projectName
+                        "is-invalid": errors.description
                       })}
                       placeholder="Project Description"
                       name="description"
@@ -109,9 +110,7 @@ class AddProject extends Component {
                   <div className="form-group">
                     <input
                       type="date"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.projectName
-                      })}
+                      className="form-control form-control-lg"
                       name="start_date"
                       value={this.state.start_date}
                       onChange={this.onChange}
@@ -121,9 +120,7 @@ class AddProject extends Component {
                   <div className="form-group">
                     <input
                       type="date"
-                      className={classnames("form-control form-control-lg", {
-                        "is-invalid": errors.projectName
-                      })}
+                      className="form-control form-control-lg"
                       name="end_date"
                       value={this.state.end_date}
                       onChange={this.onChange}
