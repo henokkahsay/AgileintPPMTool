@@ -1,5 +1,7 @@
 package com.henok.ppmtool.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.util.Date;
@@ -17,8 +19,13 @@ public class ProjectTask {
     private String status;
     private Integer priority;
     private Date dueDate;
+    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
+    @JoinColumn(name = "backlog_id",updatable = false,nullable = false)
+    @JsonIgnore
+    private  Backlog backlog;
+
 @Column(updatable = false)
-private String projectIdentifer;
+private String projectIdentifier;
     private Date creat_At;
     private Date update_At;
 
@@ -82,12 +89,12 @@ private String projectIdentifer;
         this.dueDate = dueDate;
     }
 
-    public String getProjectIdentifer() {
-        return projectIdentifer;
+    public String getProjectIdentifier() {
+        return projectIdentifier;
     }
 
-    public void setProjectIdentifer(String projectIdentifer) {
-        this.projectIdentifer = projectIdentifer;
+    public void setProjectIdentifier(String projectIdentifier) {
+        this.projectIdentifier = projectIdentifier;
     }
 
     public Date getCreat_At() {
@@ -104,6 +111,14 @@ private String projectIdentifer;
 
     public void setUpdate_At(Date update_At) {
         this.update_At = update_At;
+    }
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
     }
 
     @PrePersist
@@ -127,7 +142,7 @@ private String projectIdentifer;
                 ", status='" + status + '\'' +
                 ", priority=" + priority +
                 ", dueDate=" + dueDate +
-                ", projectIdentifer='" + projectIdentifer + '\'' +
+                ", projectIdentifier='" + projectIdentifier + '\'' +
                 ", creat_At=" + creat_At +
                 ", update_At=" + update_At +
                 '}';
