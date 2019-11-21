@@ -1,5 +1,6 @@
 package com.henok.ppmtool.web;
 
+
 import com.henok.ppmtool.domain.Project;
 import com.henok.ppmtool.services.MapValidationErrorService;
 import com.henok.ppmtool.services.ProjectService;
@@ -15,33 +16,42 @@ import javax.validation.Valid;
 @RequestMapping("/api/project")
 @CrossOrigin
 public class ProjectController {
-@Autowired
-private ProjectService projectService;
-@Autowired
-private MapValidationErrorService mapValidationErrorService;
-@PostMapping("")
-    public ResponseEntity<?> creatNewProject (@Valid @RequestBody Project project, BindingResult result){
 
-    ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
-if (errorMap!=null)return  errorMap;
+    @Autowired
+    private ProjectService projectService;
 
-    Project project1=projectService.saveOrUpdateProject(project);
+    @Autowired
+    private MapValidationErrorService mapValidationErrorService;
 
-    return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
-}
-@GetMapping("/{projectId}")
-    public ResponseEntity<?> getProjectByID(@PathVariable String projectId){
-   Project project=projectService.findByProjectIdentifier(projectId);
-   return new ResponseEntity<Project>(project, HttpStatus.OK);
-}
 
-@GetMapping("/all")
-    public Iterable<Project> getAllProjects(){return  projectService.findAllProjects();}
+    @PostMapping("")
+    public ResponseEntity<?> createNewProject(@Valid @RequestBody Project project, BindingResult result){
 
-@DeleteMapping("/{projectId}")
+        ResponseEntity<?> errorMap = mapValidationErrorService.MapValidationService(result);
+        if(errorMap!=null) return errorMap;
+
+        Project project1 = projectService.saveOrUpdateProject(project);
+        return new ResponseEntity<Project>(project1, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/{projectId}")
+    public ResponseEntity<?> getProjectById(@PathVariable String projectId){
+
+        Project project = projectService.findProjectByIdentifier(projectId);
+
+        return new ResponseEntity<Project>(project, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/all")
+    public Iterable<Project> getAllProjects(){return projectService.findAllProjects();}
+
+
+    @DeleteMapping("/{projectId}")
     public ResponseEntity<?> deleteProject(@PathVariable String projectId){
-projectService.deleteProjectByIdentifier(projectId);
-return new ResponseEntity<String>("Project With ID: '"+projectId+"' was deleted",HttpStatus.OK);
-}
-}
+        projectService.deleteProjectByIdentifier(projectId);
 
+        return new ResponseEntity<String>("Project with ID: '"+projectId+"' was deleted", HttpStatus.OK);
+    }
+}

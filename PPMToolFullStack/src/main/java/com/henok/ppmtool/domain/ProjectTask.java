@@ -8,29 +8,30 @@ import java.util.Date;
 
 @Entity
 public class ProjectTask {
-@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(updatable = false)
-    private  String projectSequence;
+    private String projectSequence;
     @NotBlank(message = "Please include a project summary")
-    private  String summary;
+    private String summary;
     private String acceptanceCriteria;
     private String status;
     private Integer priority;
     private Date dueDate;
-    @ManyToOne(fetch = FetchType.EAGER,cascade = CascadeType.REFRESH)
-    @JoinColumn(name = "backlog_id",updatable = false,nullable = false)
+    //ManyToOne with Backlog
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name="backlog_id", updatable = false, nullable = false)
     @JsonIgnore
-    private  Backlog backlog;
+    private Backlog backlog;
 
-@Column(updatable = false)
-private String projectIdentifier;
-    private Date creat_At;
+    @Column(updatable = false)
+    private String projectIdentifier;
+    private Date create_At;
     private Date update_At;
 
     public ProjectTask() {
-
     }
 
     public Long getId() {
@@ -97,12 +98,12 @@ private String projectIdentifier;
         this.projectIdentifier = projectIdentifier;
     }
 
-    public Date getCreat_At() {
-        return creat_At;
+    public Date getCreate_At() {
+        return create_At;
     }
 
-    public void setCreat_At(Date creat_At) {
-        this.creat_At = creat_At;
+    public void setCreate_At(Date create_At) {
+        this.create_At = create_At;
     }
 
     public Date getUpdate_At() {
@@ -122,15 +123,14 @@ private String projectIdentifier;
     }
 
     @PrePersist
-    protected  void onCreate(){
-    this.creat_At=new Date();
+    protected void onCreate(){
+        this.create_At = new Date();
+    }
 
-}
     @PreUpdate
-    protected  void  onUpdate(){
-    this.update_At=new Date();
-
-}
+    protected void onUpdate(){
+        this.update_At = new Date();
+    }
 
     @Override
     public String toString() {
@@ -142,8 +142,9 @@ private String projectIdentifier;
                 ", status='" + status + '\'' +
                 ", priority=" + priority +
                 ", dueDate=" + dueDate +
+                ", backlog=" + backlog +
                 ", projectIdentifier='" + projectIdentifier + '\'' +
-                ", creat_At=" + creat_At +
+                ", create_At=" + create_At +
                 ", update_At=" + update_At +
                 '}';
     }

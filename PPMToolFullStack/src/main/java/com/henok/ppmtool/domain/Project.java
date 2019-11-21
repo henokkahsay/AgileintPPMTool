@@ -10,32 +10,40 @@ import java.util.Date;
 
 @Entity
 public class Project {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank (message = "Project name is required")
+    @NotBlank(message = "Project name is required")
     private String projectName;
-    @NotBlank(message = "Project Identifier is  required")
-    @Size(min=4, max=5 , message= "Please use 4 to 5  Characters")
-    @Column(updatable =false,unique = true)
+    @NotBlank(message ="Project Identifier is required")
+    @Size(min=4, max=5, message = "Please use 4 to 5 characters")
+    @Column(updatable = false, unique = true)
     private String projectIdentifier;
-    @NotBlank(message = "project description is required")
+    @NotBlank(message = "Project description is required")
     private String description;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date start_date;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date end_date;
     @JsonFormat(pattern = "yyyy-mm-dd")
-    @Column(updatable =false)
+    @Column(updatable = false)
     private Date created_At;
     @JsonFormat(pattern = "yyyy-mm-dd")
+<<<<<<< Updated upstream
     private  Date update_At;
     @OneToOne(fetch = FetchType.EAGER,cascade = CascadeType.ALL,mappedBy = "project")
     @JsonIgnore
  private Backlog backlog;
+=======
+    private Date updated_At;
+
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "project")
+    @JsonIgnore
+    private Backlog backlog;
+>>>>>>> Stashed changes
 
     public Project() {
-
     }
 
     public Long getId() {
@@ -94,12 +102,12 @@ public class Project {
         this.created_At = created_At;
     }
 
-    public Date getUpdate_At() {
-        return update_At;
+    public Date getUpdated_At() {
+        return updated_At;
     }
 
-    public void setUpdate_At(Date update_At) {
-        this.update_At = update_At;
+    public void setUpdated_At(Date updated_At) {
+        this.updated_At = updated_At;
     }
 
     public Backlog getBacklog() {
@@ -111,13 +119,13 @@ public class Project {
     }
 
     @PrePersist
-    protected  void onCreat(){
+    protected void onCreate(){
         this.created_At = new Date();
-
     }
+
     @PreUpdate
-    protected  void onUpdate(){
-        this.update_At = new Date();
+    protected void onUpdate(){
+        this.updated_At = new Date();
     }
 
 }
