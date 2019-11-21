@@ -6,17 +6,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-<<<<<<< Updated upstream
-
-@Repository
-public interface ProjectTaskRepository extends CrudRepository<ProjectTask,Long> {
-
-List<ProjectTask> findByProjectIdentifierOrderByPriority(String  id);
-}
-=======
 @Repository
 public interface ProjectTaskRepository extends CrudRepository<ProjectTask, Long> {
 
     List<ProjectTask> findByProjectIdentifierOrderByPriority(String id);
 }
->>>>>>> Stashed changes

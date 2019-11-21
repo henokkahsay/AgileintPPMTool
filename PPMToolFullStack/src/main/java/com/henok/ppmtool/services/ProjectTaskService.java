@@ -1,11 +1,6 @@
 package com.henok.ppmtool.services;
 
-<<<<<<< Updated upstream
-import com.henok.ppmtool.domain.Backlog;
-import com.henok.ppmtool.domain.ProjectTask;
-import com.henok.ppmtool.repositories.BacklogRepository;
-import com.henok.ppmtool.repositories.ProjectTaskRepository;
-=======
+
 import  com.henok.ppmtool.domain.Backlog;
 import  com.henok.ppmtool.domain.Project;
 import  com.henok.ppmtool.domain.ProjectTask;
@@ -13,52 +8,12 @@ import  com.henok.ppmtool.exaptions.ProjectNotFoundException;
 import  com.henok.ppmtool.repositories.BacklogRepository;
 import  com.henok.ppmtool.repositories.ProjectRepository;
 import  com.henok.ppmtool.repositories.ProjectTaskRepository;
->>>>>>> Stashed changes
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectTaskService {
-<<<<<<< Updated upstream
-    @Autowired
-    private BacklogRepository backlogRepository;
-    @Autowired
-    private ProjectTaskRepository projectTaskRepository;
-
-    public ProjectTask addProjectTask(String projectIdentifier, ProjectTask projectTask) {
-
-        Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
-
-        projectTask.setBacklog(backlog);
-
-        Integer BackLongSequence = backlog.getPTSequence();
-
-        BackLongSequence++;
-        backlog.setPTSequence(BackLongSequence);
-
-        projectTask.setProjectSequence(projectIdentifier + "-" + BackLongSequence);
-
-        projectTask.setProjectIdentifier(projectIdentifier);
-
-
-
-        if (projectTask.getStatus() == "" || projectTask.getStatus() == null) {
-                projectTask.setStatus("TO_DO");
-
-            }
-        if ( projectTask.getPriority() == null) {
-            projectTask.setPriority(3);
-        }
-
-            return projectTaskRepository.save(projectTask);
-        }
-      public   Iterable<ProjectTask>findBacklogById(String id){
-        return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
-        }
-    }
-
-
-=======
 
 
     @Autowired
@@ -76,7 +31,6 @@ public class ProjectTaskService {
         try {
             //PTs to be added to a specific project, project != null, BL exists
             Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
-
             //set the bl to pt
             projectTask.setBacklog(backlog);
             //we want our project sequence to be like this: IDPRO-1  IDPRO-2  ...100 101
@@ -119,4 +73,3 @@ public class ProjectTaskService {
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
     }
 }
->>>>>>> Stashed changes
