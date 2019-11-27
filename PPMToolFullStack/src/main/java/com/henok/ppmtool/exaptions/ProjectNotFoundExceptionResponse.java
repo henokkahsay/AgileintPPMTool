@@ -1,7 +1,6 @@
 package com.henok.ppmtool.exaptions;
 
 public class ProjectNotFoundExceptionResponse {
-
     private String ProjectNotFound;
 
     public ProjectNotFoundExceptionResponse(String projectNotFound) {

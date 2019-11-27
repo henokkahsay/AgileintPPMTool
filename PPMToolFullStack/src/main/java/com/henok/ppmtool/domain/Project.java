@@ -80,6 +80,7 @@ public class Project {
     }
 
     public Date getEnd_date() {
+
         return end_date;
     }
 
@@ -100,24 +101,29 @@ public class Project {
     }
 
     public void setUpdated_At(Date updated_At) {
+
         this.updated_At = updated_At;
     }
 
     public Backlog getBacklog() {
+
         return backlog;
     }
 
     public void setBacklog(Backlog backlog) {
+
         this.backlog = backlog;
     }
 
     @PrePersist
     protected void onCreate(){
+
         this.created_At = new Date();
     }
 
     @PreUpdate
     protected void onUpdate(){
+
         this.updated_At = new Date();
     }
 

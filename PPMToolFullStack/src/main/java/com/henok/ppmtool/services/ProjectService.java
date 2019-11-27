@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectService {
-
     @Autowired
     private ProjectRepository projectRepository;
 
@@ -68,5 +67,4 @@ public class ProjectService {
 
         projectRepository.delete(project);
     }
-
 }
