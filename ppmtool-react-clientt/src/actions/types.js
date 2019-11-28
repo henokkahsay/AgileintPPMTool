@@ -3,7 +3,6 @@ export const GET_PROJECTS = "GET_PROJECTS";
 export const GET_PROJECT = "GET_PROJECT";
 export const DELETE_PROJECT = "DELETE_PROJECT";
 
-
-export const GET_BAKLOG = "GET_BAKLOG";
+export const GET_BACKLOG = "GET_BAKLOG";
 export const GET_PROJECT_TASK = "GET_PROJECT_TASK";
 export const DELETE_PROJECT_TASK = "DELETE_PROJECT_TASK";
