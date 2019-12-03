@@ -14,21 +14,19 @@ class Backlog extends Component {
     let doneItems = [];
 
     for (let i = 0; i < tasks.length; i++) {
-      console.log(tasks[i]);
-      
-    if(tasks[i].props.project_task.status =="TO_DO"){
-      todoItems.push(tasks[i])
+      if (tasks[i].props.project_task.status === "TO_DO") {
+        todoItems.push(tasks[i]);
+      }
+
+      if (tasks[i].props.project_task.status === "IN_PROGRESS") {
+        inProgressItems.push(tasks[i]);
+      }
+
+      if (tasks[i].props.project_task.status === "DONE") {
+        doneItems.push(tasks[i]);
+      }
     }
 
-    if(tasks[i].props.project_task.status =="IN_PROGRESS"){
-      inProgressItems.push(tasks[i])
-    }
-    if(tasks[i].props.project_task.status =="DONE"){
-      doneItems.push(tasks[i])
-    }
-
-
-    }
     return (
       <div className="container">
         <div className="row">
@@ -39,9 +37,8 @@ class Backlog extends Component {
               </div>
             </div>
             {todoItems}
-
             {
-              //tasks
+              // insert tasks here
             }
           </div>
           <div className="col-md-4">
@@ -59,7 +56,6 @@ class Backlog extends Component {
               </div>
             </div>
             {doneItems}
-      
           </div>
         </div>
       </div>
