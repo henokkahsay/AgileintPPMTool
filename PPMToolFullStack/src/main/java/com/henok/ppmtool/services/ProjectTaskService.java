@@ -10,7 +10,6 @@ import com.henok.ppmtool.repositories.ProjectRepository;
 import com.henok.ppmtool.repositories.ProjectTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class ProjectTaskService {
 
