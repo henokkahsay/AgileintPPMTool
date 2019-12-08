@@ -2,9 +2,12 @@ package com.henok.ppmtool.services;
 
 import com.henok.ppmtool.domain.Backlog;
 import  com.henok.ppmtool.domain.Project;
+import com.henok.ppmtool.domain.User;
 import  com.henok.ppmtool.exaptions.ProjectIdException;
+import com.henok.ppmtool.exaptions.ProjectNotFoundException;
 import  com.henok.ppmtool.repositories.BacklogRepository;
 import  com.henok.ppmtool.repositories.ProjectRepository;
+import com.henok.ppmtool.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +18,15 @@ public class ProjectService {
 
     @Autowired
     private BacklogRepository backlogRepository;
-
-    public Project saveOrUpdateProject(Project project){
+@Autowired
+private UserRepository userRepository;
+    public Project saveOrUpdateProject(Project project,String username){
         try{
+
+            User user= userRepository.findByUsername(username);
+            project.setUser(user);
+            project.setProjectLeader(user.getUsername());
+
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
 
             if(project.getId()==null){
@@ -40,31 +49,31 @@ public class ProjectService {
     }
 
 
-    public Project findProjectByIdentifier(String projectId){
+    public Project findProjectByIdentifier(String projectId,String username){
 
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
 
         if(project == null){
             throw new ProjectIdException("Project ID '"+projectId+"' does not exist");
 
+
         }
+
+if (project.getProjectLeader().equals(username)){
+    throw new ProjectNotFoundException("Project not found in your account");
+}
 
 
         return project;
     }
 
-    public Iterable<Project> findAllProjects(){
-        return projectRepository.findAll();
+    public Iterable<Project> findAllProjects(String username){
+        return projectRepository.findAllByProjectLeader(username) ;
     }
 
 
-    public void deleteProjectByIdentifier(String projectid){
-        Project project = projectRepository.findByProjectIdentifier(projectid.toUpperCase());
+    public void deleteProjectByIdentifier(String projectid,String username){
 
-        if(project == null){
-            throw  new  ProjectIdException("Cannot Project with ID '"+projectid+"'. This project does not exist");
-        }
-
-        projectRepository.delete(project);
+        projectRepository.delete(findProjectByIdentifier(projectid,username));
     }
 }
