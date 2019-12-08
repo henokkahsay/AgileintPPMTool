@@ -2,7 +2,6 @@ package com.henok.ppmtool.services;
 
 
 import com.henok.ppmtool.domain.Backlog;
-import com.henok.ppmtool.domain.Project;
 import com.henok.ppmtool.domain.ProjectTask;
 import com.henok.ppmtool.exaptions.ProjectNotFoundException;
 import com.henok.ppmtool.repositories.BacklogRepository;
@@ -23,17 +22,15 @@ public class ProjectTaskService {
 
     @Autowired
     private ProjectRepository projectRepository;
-    public ProjectTask addProjectTask(String projectIdentifier,ProjectTask projectTask){
-
-    try{
-
-
+    @Autowired
+    private ProjectService projectService;
+    public ProjectTask addProjectTask(String projectIdentifier,ProjectTask projectTask,String username){
 
 
-        Backlog backlog = backlogRepository.findByProjectIdentifier(projectIdentifier);
+        Backlog backlog =projectService.findProjectByIdentifier(projectIdentifier,username).getBacklog(); // backlogRepository.findByProjectIdentifier(projectIdentifier);
 
 
-
+         System.out.println(backlog);
         projectTask.setBacklog(backlog);
         Integer BacklogSequence = backlog.getPTSequence();
         BacklogSequence++;
@@ -46,29 +43,19 @@ public class ProjectTaskService {
         if (projectTask.getStatus()==""|| projectTask.getStatus()==null){
             projectTask.setStatus("TO_DO");
         }
-        if (projectTask.getPriority()==0||projectTask.getPriority()==null){
+
+
+        if (projectTask.getPriority()==null||projectTask.getPriority()==0){
             projectTask.setPriority(3);
         }
         return projectTaskRepository.save(projectTask);
-    }catch (Exception e){
-        throw  new ProjectNotFoundException("Project not Found");
-    }
 
     }
 
 
+ public Iterable<ProjectTask>findBacklogByid(String  id,String username){
 
-
-
-
- public Iterable<ProjectTask>findBacklogByid(String  id){
-
-     Project project=projectRepository.findByProjectIdentifier(id);
-
-        if (project==null){
-            throw new ProjectNotFoundException("Project with ID: '"+id+"' does not exist");
-        }
-
+   projectService.findProjectByIdentifier(id,username);
         return projectTaskRepository.findByProjectIdentifierOrderByPriority(id);
 }
 
