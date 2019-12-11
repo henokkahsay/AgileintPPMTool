@@ -17,22 +17,25 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-   @Email(message = "Username needs to be an email")
-   @NotBlank(message = "username is required")
-   @Column(unique = true)
-   private String username;
-   @NotBlank(message ="Please enter your full name")
-   private String fullName;
-   @NotBlank(message ="Password field is required")
-   private String password;
-@Transient
-//@JsonIgnore
-    private  String confirmPassword;
-private Date  create_At;
-private Date update_At;
 
-@OneToMany(cascade = CascadeType.REFRESH,fetch = FetchType.EAGER,mappedBy = "user",orphanRemoval = true)
-private List<Project> projects =new ArrayList<>();
+    @Email(message = "Username needs to be an email")
+    @NotBlank(message = "username is required")
+    @Column(unique = true)
+    private String username;
+    @NotBlank(message = "Please enter your full name")
+    private String fullName;
+    @NotBlank(message = "Password field is required")
+    private String password;
+    @Transient
+    private String confirmPassword;
+    private Date create_At;
+    private Date update_At;
+
+    //OneToMany with Project
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER, mappedBy = "user", orphanRemoval = true)
+    private List<Project> projects = new ArrayList<>();
+
+
     public User() {
     }
 
@@ -92,21 +95,27 @@ private List<Project> projects =new ArrayList<>();
         this.update_At = update_At;
     }
 
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
+    }
+
     @PrePersist
-    protected  void onCreat(){
-        this.create_At=new Date();
-
+    protected void onCreate(){
+        this.create_At = new Date();
     }
+
     @PreUpdate
-    protected  void onUpdate(){
-
-        this.update_At=new Date();
+    protected void onUpdate(){
+        this.update_At = new Date();
     }
 
-/*
-UserDetails interface methods
-
- */
+    /*
+    UserDetails interface methods
+     */
 
     @Override
     @JsonIgnore
@@ -116,26 +125,24 @@ UserDetails interface methods
 
     @Override
     @JsonIgnore
-
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
     @JsonIgnore
-
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
     @JsonIgnore
-
     public boolean isEnabled() {
         return true;
     }
