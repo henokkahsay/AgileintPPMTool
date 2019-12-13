@@ -24,16 +24,25 @@ export const login = LoginRequest => async dispatch => {
     const res = await axios.post("/api/users/login", LoginRequest);
     const { token } = res.data;
     localStorage.setItem("jwtToken", token);
+    setJWTToken(token);
     const decode = jwt_decode(token);
     dispatch({
       type: SET_CURRENT_USER,
       payload: decode
     });
-    setJWTToken(token);
   } catch (err) {
     dispatch({
       type: GET_ERRORS,
       payload: err.response.data
     });
   }
+};
+export const logout = () => dispatch => {
+  localStorage.removeItem("jwtToken");
+  setJWTToken(false);
+
+  dispatch({
+    type: SET_CURRENT_USER,
+    payload: {  }
+  });
 };
